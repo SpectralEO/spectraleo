@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpectralEO — Remote Sensing & Geospatial ML Consulting</title>
+  <meta
+    name="description"
+    content="SpectralEO is a specialist consultancy working across Earth Observation, Remote Sensing, Geospatial Machine Learning, Cloud-Native workflows, and Science Communication."
+  />
+  <meta name="author" content="Xenofon Karagiannis" />
+
+  <meta property="og:title" content="SpectralEO" />
+  <meta
+    property="og:description"
+    content="Earth Observation, Remote Sensing, Geospatial ML, and Cloud-Native workflows."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spectraleo.com" />
+
+  <style>
+    :root {
+      --bg: #eef2f7;
+      --surface-solid: #ffffff;
+      --text: #173150;
+      --text-soft: #516984;
+      --line: #d8e2ee;
+      --primary: #1b5fc7;
+      --primary-dark: #154ea4;
+      --navy: #102844;
+      --shadow-sm: 0 8px 24px rgba(16, 40, 68, 0.08);
+      --radius: 18px;
+      --max-width: 1120px;
+      --section-space: 5.5rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    /* Nav */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(238, 242, 247, 0.8);
+      border-bottom: 1px solid rgba(216, 226, 238, 0.9);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    .logo-spectral {
+      background: linear-gradient(
+        90deg,
+        #6258c4 0%,
+        #4a79be 22%,
+        #3f8f9e 42%,
+        #66955e 60%,
+        #b08d45 78%,
+        #a65f4a 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-eo {
+      color: var(--navy);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      color: var(--text-soft);
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--navy);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 12px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-cta:hover,
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-cta:hover {
+      background: var(--primary-dark);
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      padding: 0.25rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      margin: 5px 0;
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      padding: 0 0 1rem;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.9rem 0;
+      border-top: 1px solid var(--line);
+      font-weight: 600;
+      color: var(--text-soft);
+    }
+
+    .mobile-menu a:last-child {
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: min(82vh, 860px);
+      display: grid;
+      align-items: center;
+      overflow: clip;
+      background:
+        linear-gradient(to bottom, rgba(7, 25, 44, 0.28), rgba(7, 25, 44, 0.50)),
+        url("assets/hero-eo.jpg") center center / cover no-repeat;
+      color: white;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(10, 20, 35, 0.18), rgba(10, 20, 35, 0.02) 35%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 0 6rem;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      margin-bottom: 1.15rem;
+      padding: 0.5rem 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.9rem, 8vw, 6.25rem);
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+      font-weight: 850;
+      text-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-title-spectral {
+      display: inline-block;
+      color: #ffffff;
+      background: none;
+      -webkit-text-fill-color: #ffffff;
+      filter: none;
+    }
+
+    .hero-title-eo {
+      color: #ffffff;
+    }
+
+    .hero-lead {
+      width: min(900px, 100%);
+      margin: 1.4rem auto 0;
+      font-size: clamp(1.08rem, 2vw, 1.6rem);
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.98);
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-sub {
+      width: min(860px, 100%);
+      margin: 0.9rem auto 0;
+      font-size: clamp(1rem, 1.5vw, 1.16rem);
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 210px;
+      padding: 0.95rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 750;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.46);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Sections */
+    section {
+      padding: var(--section-space) 0;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-heading::before,
+    .section-heading::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      line-height: 1.1;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      margin: 0 auto 2.25rem;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 1.04rem;
+    }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .service-card {
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .service-card h3 {
+      margin: 0 0 0.8rem;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      color: var(--navy);
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 1rem;
+    }
+
+    /* Reflectance */
+    .reflectance-box {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .reflectance-box p {
+      margin: 0 0 1.2rem;
+      color: var(--text-soft);
+      font-size: 1.04rem;
+    }
+
+    /* Contact */
+    .contact-box {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--surface-solid);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fbff;
+      color: var(--text-soft);
+      word-break: break-word;
+    }
+
+    .contact-item.is-link {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-item.is-link:hover {
+      border-color: #bfd1e6;
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+    }
+
+    .contact-icon {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+    }
+
+    .contact-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+
+    .contact-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .contact-value {
+      color: var(--text-soft);
+    }
+
+    .contact-value a {
+      color: var(--primary);
+    }
+
+    .contact-value a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      padding: 2.2rem 0 2.6rem;
+      border-top: 1px solid var(--line);
+      color: var(--text-soft);
+    }
+
+    .footer-inner {
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.65rem;
+      color: var(--navy);
+    }
+
+    .footer-copy {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero {
+        min-height: 72vh;
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --section-space: 4.2rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-block;
+      }
+
+      .hero-inner {
+        padding: 5.2rem 0 4.4rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 0.5rem;
+      }
+
+      .section-heading::before,
+      .section-heading::after {
+        display: none;
+      }
+
+      .service-card,
+      .reflectance-box,
+      .contact-box {
+        padding: 1.35rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 1.15rem));
+      }
+
+      .eyebrow {
+        font-size: 0.82rem;
+      }
+
+      .hero {
+        min-height: 68vh;
+        background-position: center top;
+      }
+
+      .hero-lead {
+        font-size: 1.02rem;
+      }
+
+      .hero-sub {
+        font-size: 0.96rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="container nav-inner">
+      <a href="#top" class="logo" aria-label="SpectralEO home">
+        <span class="logo-spectral">Spectral</span><span class="logo-eo">EO</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#editorial">Editorial</a></li>
+        <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+      </ul>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="container mobile-menu" id="mobileMenu">
+      <a href="#services">Services</a>
+      <a href="#editorial">Editorial</a>
+      <a href="#contact">Get in Touch</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <div class="eyebrow">Earth Observation · Remote Sensing · Geospatial ML</div>
+
+      <h1>
+        <span class="hero-title-spectral">Spectral</span><span class="hero-title-eo">EO</span>
+      </h1>
+
+      <p class="hero-lead">
+        Earth Observation, Remote Sensing, Geospatial ML, and Cloud-Native Workflows.
+      </p>
+
+      <p class="hero-sub">
+        Specialist consulting and technical delivery for Earth Observation and Remote Sensing projects and science communication.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Get in Touch</a>
+        <a class="btn btn-secondary" href="#editorial">Read Spectral Reflectance</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="services">
+      <div class="container">
+        <div class="section-heading">
+          <h2>What We Do</h2>
+        </div>
+
+        <p class="section-intro">
+          SpectralEO supports research, operational, and applied work with specialist expertise
+          across Earth Observation, remote sensing, machine learning, geospatial workflows, and editorial development.
+        </p>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Remote Sensing &amp; Analysis</h3>
+            <p>
+              Support for EO projects, satellite data interpretation, analysis,
+              and remote sensing workflows.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Geospatial ML</h3>
+            <p>
+              ML methods for satellite imagery, including classification, detection,
+              monitoring, and model development and deployment.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Cloud Workflows</h3>
+            <p>
+              Scalable processing pipelines, cloud-native architectures, and operational
+              workflows.
+            </p>
+          </article>
+
+          <article class="service-card">
+            <h3>Scientific Writing &amp; Editorial Development</h3>
+            <p>
+              Research-based writing, editorial development, and communication support
+              for Earth Observation and remote sensing.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="editorial">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Spectral Reflectance</h2>
+        </div>
+
+        <div class="reflectance-box">
+          <p>
+            Spectral Reflectance is the editorial publication associated with SpectralEO, reflecting an ongoing practice of writing, interpretation, and communication around Earth Observation and remote sensing.
+          </p>
+
+          <a
+            class="btn btn-primary"
+            href="https://www.spectralreflectance.space/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit Spectral Reflectance
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Contact</h2>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-list">
+            <a class="contact-item is-link" href="mailto:info@spectraleo.com">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.8" rx="2"/>
+                <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">info@spectraleo.com</span>
+              </div>
+            </a>
+
+            <a
+              class="contact-item is-link"
+              href="https://www.linkedin.com/company/spectraleo/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88ZM5.7 9.8h2.5V18H5.7V9.8Zm4.06 0h2.4v1.12h.03c.33-.63 1.15-1.29 2.37-1.29 2.53 0 3 1.67 3 3.84V18h-2.5v-3.99c0-.95-.02-2.18-1.33-2.18-1.33 0-1.53 1.04-1.53 2.11V18h-2.5V9.8Z"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-value">SpectralEO</span>
+              </div>
+            </a>
+
+            <div class="contact-item">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s6-5.33 6-11a6 6 0 1 0-12 0c0 5.67 6 11 6 11Z" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">Based in</span>
+                <span class="contact-value">Greece</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="logo-spectral">Spectral</span><span class="logo-eo">EO</span>
+      </div>
+      <p class="footer-copy">
+        © <span id="year"></span> SpectralEO · Earth Observation, Remote Sensing, and Geospatial ML consulting.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+    const year = document.getElementById("year");
+
+    year.textContent = new Date().getFullYear();
+
+    menuToggle.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  </script>
+</body>
+</html>
