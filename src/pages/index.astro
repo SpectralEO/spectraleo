@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const services = [
+  {
+    title: 'Downstream EO Analytics',
+    text: 'Remote sensing analysis, satellite-data interpretation, monitoring workflows, and applied geospatial methods for environmental, industrial, and operational use cases.',
+  },
+  {
+    title: 'GeoAI & Applied ML',
+    text: 'Machine learning for satellite imagery, including classification, detection, segmentation, quality control, and model-assisted analysis.',
+  },
+  {
+    title: 'Agentic AI for Earth Observation',
+    text: 'Design and prototyping of auditable AI-assisted EO workflows, including data access, orchestration, and human-in-the-loop review.',
+  },
+  {
+    title: 'Technical Writing & EO Communication',
+    text: 'Technical reports, science writing, proposal support, documentation, market-facing articles, and editorial content for organisations working with Earth Observation and geospatial technology.',
+  },
+];
+
+const blogThemes = [
+  {
+    title: 'Prototype',
+    text: 'Early implementation work around agentic AI, STAC-based workflows, report generation, and quality-control automation.',
+  },
+  {
+    title: 'Technical Article',
+    text: 'Practical writing on downstream EO analytics, GeoAI, remote sensing methods, reproducible pipelines, and validation.',
+  },
+  {
+    title: 'R&D',
+    text: 'Applied exploration of ideas that may become future tools, services, proposals, or internal technical capabilities.',
+  },
+  {
+    title: 'Company Update',
+    text: 'Updates on what SpectralEO is building, testing, publishing, and learning across Earth Observation and geospatial technology.',
+  },
+];
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+<BaseLayout>
+<header class="hero" id="top">
+  <div class="container hero-inner">
+    <div class="eyebrow">Earth Observation · GeoAI · Agentic AI Workflows · EO Communication</div>
+
+    <h1>
+      <span class="hero-title-spectral">Spectral</span><span class="hero-title-eo">EO</span>
+    </h1>
+
+    <p class="hero-lead">
+      Specialist Earth Observation company for downstream satellite-data analysis, GeoAI, Agentic AI workflows, and technical communication.
+    </p>
+
+    <p class="hero-sub">
+      SpectralEO develops satellite-data workflows, machine learning prototypes, technical reports, and EO writing for organisations working with remote sensing and geospatial data.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#contact">Get in Touch</a>
+      <a class="btn btn-secondary" href="/blog/">Read the Blog</a>
+    </div>
+  </div>
+</header>
+
+  <main>
+    <section id="services">
+      <div class="container">
+        <div class="section-heading">
+          <h2>What We Do</h2>
+        </div>
+
+        <p class="section-intro">
+          SpectralEO works on the downstream layer of Earth Observation: analysis, modelling, workflow design, reporting, and communication.
+        </p>
+
+        <div class="services-grid">
+          {services.map((service) => <ServiceCard title={service.title} text={service.text} />)}
+        </div>
+      </div>
+    </section>
+
+    <section id="blog-preview">
+      <div class="container">
+        <div class="section-heading">
+          <h2>From the Blog</h2>
+        </div>
+
+        <p class="section-intro">
+          Technical articles, prototypes, and company updates from SpectralEO. The blog focuses on downstream Earth Observation, GeoAI, agentic AI workflows, and technical communication.
+        </p>
+
+        {recentPosts.length > 0 ? (
+          <div class="post-grid">
+            {recentPosts.map((post) => <PostCard post={post} />)}
+          </div>
+        ) : (
+          <div class="services-grid">
+            {blogThemes.map((theme) => <ServiceCard title={theme.title} text={theme.text} />)}
+          </div>
+        )}
+
+        <div class="hero-actions" style="margin-top: 2rem; justify-content: center;">
+          <a class="btn btn-primary" href="/blog/">Read the Blog</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="publications">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Publications &amp; Editorial Work</h2>
+        </div>
+
+        <p class="section-intro">
+          SpectralEO also produces specialist writing on Earth Observation, remote sensing, and the geospatial market.
+        </p>
+
+        <div class="publication-grid">
+          <article class="publication-card">
+            <p class="publication-kicker">Long-form EO essays</p>
+            <h3>Spectral Reflectance</h3>
+            <p>
+              Essays, weekly newsletter, technical commentary, and reflections on Earth Observation, geospatial technology, and the direction of the EO sector.
+            </p>
+            <a
+              class="btn btn-primary"
+              href="https://www.spectralreflectance.space/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit Spectral Reflectance
+            </a>
+          </article>
+
+          <article class="publication-card">
+            <p class="publication-kicker">Short-form EO signal</p>
+            <h3>The Morning Backscatter</h3>
+            <p>
+              A compact morning brief of useful links, news, datasets, papers, visual material, and ideas from the Earth Observation and geospatial world.
+            </p>
+            <a
+              class="btn btn-primary"
+              href="https://morningbackscatter.space/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit The Morning Backscatter
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Contact</h2>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-list">
+            <a class="contact-item is-link" href="mailto:info@spectraleo.com">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.8" rx="2"/>
+                <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">info@spectraleo.com</span>
+              </div>
+            </a>
+
+            <a
+              class="contact-item is-link"
+              href="https://www.linkedin.com/company/spectraleo/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88ZM5.7 9.8h2.5V18H5.7V9.8Zm4.06 0h2.4v1.12h.03c.33-.63 1.15-1.29 2.37-1.29 2.53 0 3 1.67 3 3.84V18h-2.5v-3.99c0-.95-.02-2.18-1.33-2.18-1.33 0-1.53 1.04-1.53 2.11V18h-2.5V9.8Z"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-value">SpectralEO</span>
+              </div>
+            </a>
+
+            <div class="contact-item">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s6-5.33 6-11a6 6 0 1 0-12 0c0 5.67 6 11 6 11Z" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.8"/>
+              </svg>
+              <div class="contact-content">
+                <span class="contact-label">Based in</span>
+                <span class="contact-value">Greece</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { slugifyTag } from '../../utils/tags';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = post.data.pubDate.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<BaseLayout
+  title={`${post.data.title} — SpectralEO Blog`}
+  description={post.data.description}
+  ogType="article"
+>
+  <main class="article-shell">
+    <div class="container">
+      <header class="article-header">
+        <p class="post-meta">SpectralEO Blog · {formattedDate}</p>
+        <h1>{post.data.title}</h1>
+        <p class="article-description">{post.data.description}</p>
+        {post.data.tags.length > 0 && (
+          <div class="post-tags" aria-label="Tags" style="justify-content: center;">
+            {post.data.tags.map((tag) => (
+              <a class="post-tag" href={`/blog/tags/${slugifyTag(tag)}/`}>{tag}</a>
+            ))}
+          </div>
+        )}
+        <div class="rainbow-rule"></div>
+      </header>
+
+      <article class="article-content">
+        <Content />
+      </article>
+
+      <div style="max-width: var(--readable-width); margin: 0 auto;">
+        <a class="back-link" href="/blog/">← Back to all posts</a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

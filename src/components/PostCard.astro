@@ -1,0 +1,22 @@
+---
+import { slugifyTag } from '../utils/tags';
+
+const { post } = Astro.props;
+const formattedDate = post.data.pubDate.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<article class="post-card">
+  <p class="post-meta">{formattedDate}</p>
+  <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+  <p>{post.data.description}</p>
+  {post.data.tags.length > 0 && (
+    <div class="post-tags" aria-label="Tags">
+      {post.data.tags.map((tag) => (
+        <a class="post-tag" href={`/blog/tags/${slugifyTag(tag)}/`}>{tag}</a>
+      ))}
+    </div>
+  )}
+</article>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { slugifyTag } from '../../../utils/tags';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags)));
+
+  return tags.map((tag) => ({
+    params: { tag: slugifyTag(tag) },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.tags.includes(tag)))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout
+  title={`${tag} — SpectralEO Blog`}
+  description={`SpectralEO blog posts tagged ${tag}.`}
+>
+  <main>
+    <section class="blog-hero compact">
+      <div class="container blog-hero-inner">
+        <div class="eyebrow">SpectralEO Blog</div>
+        <h1>Posts tagged <span class="gradient-text">{tag}</span></h1>
+        <p>
+          Company-relevant articles, prototypes, and applied thinking from SpectralEO.
+        </p>
+      </div>
+    </section>
+
+    <section class="blog-list-section">
+      <div class="container">
+        <div class="blog-list">
+          {posts.map((post) => <PostCard post={post} />)}
+        </div>
+        <div style="max-width: var(--readable-width); margin: 2rem auto 0;">
+          <a class="back-link" href="/blog/">← Back to all posts</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

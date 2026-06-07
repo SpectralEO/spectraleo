@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { slugifyTag } from '../../utils/tags';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort((a, b) => a.localeCompare(b));
+---
+<BaseLayout
+  title="SpectralEO Blog — EO, GeoAI, and Agentic AI"
+  description="Company updates, technical articles, prototypes, and applied thinking from SpectralEO on downstream Earth Observation, GeoAI, agentic AI workflows, and scientific communication."
+>
+  <main>
+    <section class="blog-hero">
+      <div class="container blog-hero-inner">
+        <div class="eyebrow">SpectralEO Blog</div>
+        <h1>
+          Company updates, technical articles, prototypes, and applied thinking.
+        </h1>
+        <p>
+          The blog is where SpectralEO publishes company-relevant work: downstream Earth Observation, GeoAI, agentic AI workflows, quality control, reproducible analysis, technical reporting, and scientific communication.
+        </p>
+
+        {tags.length > 0 && (
+          <div class="tag-filter" aria-label="Browse posts by tag">
+            {tags.map((tag) => (
+              <a class="post-tag" href={`/blog/tags/${slugifyTag(tag)}/`}>{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="blog-list-section">
+      <div class="container">
+        <div class="blog-list">
+          {posts.map((post) => <PostCard post={post} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
